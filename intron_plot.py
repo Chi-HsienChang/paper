@@ -351,15 +351,43 @@ for sp in species_list:
 
     # -------------------- 右圖：eCDF --------------------
     ax2.grid(True, alpha=0.3)
+
+
+
     n_correct = len(correct_scores)
     n_incorrect = len(incorrect_scores)
     if n_correct > 0:
         x_c, y_c = ecdf(correct_scores)
-        ax2.step(x_c, y_c, where='post', label=f"Correct (n={n_correct})")
+        # ax2.step(x_c, y_c, where='post', label=f"Correct (n={n_correct})")
+        ax2.step(x_c, y_c, where='post', label=f"Correct")
     if n_incorrect > 0:
         x_i, y_i = ecdf(incorrect_scores)
-        ax2.step(x_i, y_i, where='post', label=f"Incorrect (n={n_incorrect})")
-    
+        # ax2.step(x_i, y_i, where='post', label=f"Incorrect (n={n_incorrect})")
+        ax2.step(x_i, y_i, where='post', label=f"Incorrect")
+
+
+    ax2.axvline(0.9, linestyle="--", color="red", linewidth=1.2, alpha=0.7)
+
+    ax2.set_xlim(0, 1)
+    # ax2.set_xticks(np.arange(0, 1.01, 0.1))
+    ax2.set_xticks([0.0, 0.5, 0.9, 1.0])
+
+
+    # # 在 0.9 的位置標示藍橘線對應的 y 值
+    # threshold = 0.9
+    # if n_correct > 0:
+    #     idx_c = np.searchsorted(x_c, threshold, side="right") - 1
+    #     if 0 <= idx_c < len(y_c):
+    #         ax2.plot(threshold, y_c[idx_c], 'o', color="#1f77b4")
+    #         ax2.text(threshold + 0.02, y_c[idx_c], f"{y_c[idx_c]:.2f}", color="#1f77b4", fontsize=12, va="bottom")
+
+    # if n_incorrect > 0:
+    #     idx_i = np.searchsorted(x_i, threshold, side="right") - 1
+    #     if 0 <= idx_i < len(y_i):
+    #         ax2.plot(threshold, y_i[idx_i], 'o', color="#ff7f0e")
+    #         ax2.text(threshold + 0.02, y_i[idx_i], f"{y_i[idx_i]:.2f}", color="#ff7f0e", fontsize=12, va="bottom")
+
+
     ax2.set_xlabel("Intron Score", fontsize=14)
     ax2.set_ylabel("eCDF", fontsize=14)
     ax2.legend(loc='upper left', fontsize=14)

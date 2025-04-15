@@ -367,11 +367,19 @@ for sp in species_list:
     n_incorrect = len(incorrect_scores)
     if n_correct > 0:
         x_c, y_c = ecdf(correct_scores)
-        ax2.step(x_c, y_c, where='post', label=f"Correct (n={n_correct})")
+        # ax2.step(x_c, y_c, where='post', label=f"Correct (n={n_correct})")
+        ax2.step(x_c, y_c, where='post', label=f"Correct")
     if n_incorrect > 0:
         x_i, y_i = ecdf(incorrect_scores)
-        ax2.step(x_i, y_i, where='post', label=f"Incorrect (n={n_incorrect})")
-    
+        # ax2.step(x_i, y_i, where='post', label=f"Incorrect (n={n_incorrect})")
+        ax2.step(x_i, y_i, where='post', label=f"Incorrect")
+
+    ax2.axvline(0.9, linestyle="--", color="red", linewidth=1.2, alpha=0.7)
+
+    ax2.set_xlim(0, 1)
+    # ax2.set_xticks(np.arange(0, 1.01, 0.1))
+    ax2.set_xticks([0.0, 0.5, 0.9, 1.0])
+
     ax2.set_xlabel("Exon Score", fontsize=14)
     ax2.set_ylabel("eCDF", fontsize=14)
     ax2.legend(loc='upper left', fontsize=14)
